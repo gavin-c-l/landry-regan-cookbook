@@ -40,7 +40,8 @@ const app = {
         });
     },
 
-    showView(view) {
+    showView(view) 
+    {
         document.getElementById('hero').classList.toggle('hidden', view !== 'hero');
         document.getElementById('auth').classList.toggle('hidden', view !== 'auth');
         document.getElementById('main').classList.toggle('hidden', view !== 'main');
@@ -180,7 +181,7 @@ const app = {
 
         grid.innerHTML = this.categories.map(cat => `
             <div class="bg-white rounded-lg shadow-md p-4 flex flex-col items-center justify-center cursor-pointer hover:shadow-lg transition group">
-                <i class="fas fa-folder text-purple-500 text-3xl mb-2 group-hover:scale-110 transition"></i>
+                <i class="fas fa-shopping-basket text-purple-500 text-3xl mb-2 group-hover:scale-110 transition"></i>
                 <h4 class="font-bold text-gray-800 text-center text-sm">${cat.name}</h4>
                 ${cat.createdBy === this.user.id ? `
                     <button onclick="app.deleteCategory('${cat.id}')" class="mt-2 text-red-500 hover:text-red-700 text-xs">
@@ -242,6 +243,22 @@ const app = {
         textarea.placeholder = 'Step';
         textarea.rows = 2;
         container.appendChild(textarea);
+    },
+
+    removeIngredientInput() {
+        const container = document.getElementById('ingredientsContainer');
+        if (container.childElementCount <= 1) {
+            return;
+        } 
+        container.lastElementChild.remove();
+    },
+
+    removeInstructionInput() {
+        const container = document.getElementById('instructionsContainer');
+                if (container.childElementCount <= 1) {
+            return;
+        } 
+        container.lastElementChild.remove();
     },
 
     async saveRecipe() {
