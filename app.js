@@ -35,7 +35,7 @@ const app = {
                 this.showView('main');
             } else {
                 this.user = null;
-                this.showView('auth');
+                //this.showView('auth');
             }
         });
     },
