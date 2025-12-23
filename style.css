@@ -1,0 +1,25 @@
+.hero-bg {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+.recipe-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.recipe-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+.category-btn {
+    transition: all 0.3s ease;
+}
+.category-btn.active {
+    background-color: #667eea;
+    color: white;
+}
+.accordion-button:not(.collapsed) {
+    background-color: #f8f9fa;
+    color: #667eea;
+}
+
+.collapse.show {
+  visibility: visible !important;
+}

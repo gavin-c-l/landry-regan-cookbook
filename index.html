@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landry/Regan Cookbook</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="style.css"
+
+</head>
+<body class="bg-gray-50">
+    <div id="app">>
+        <section id="hero" class="hero-bg text-white min-h-screen flex items-center justify-center">
+            <div class="text-center px-4">
+                <h1 class="text-5xl md:text-6xl font-bold mb-4">Landry/Regan Cookbook</h1>
+                <p class="text-xl md:text-2xl mb-8 opacity-90">Share your favorite recipes with family</p>
+                <button onclick="app.showView('auth')" class="bg-white text-purple-600 px-8 py-3 rounded-lg font-bold text-lg hover:bg-gray-100 transition">
+                    <i class="fas fa-arrow-down mr-2"></i> Get Started
+                </button>
+            </div>
+        </section>
+
+        <section id="auth" class="hidden min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center p-4">
+            <div class="bg-white rounded-lg shadow-xl p-8 w-full max-w-md">
+                <h2 id="authTitle" class="text-3xl font-bold text-gray-800 mb-2">Sign In</h2>
+                <p id="authSubtitle" class="text-gray-600 mb-6">Access the family recipes</p>
+                
+                <div id="authForm" class="space-y-4 mb-6">
+                    <input type="text" id="authName" placeholder="Full Name" class="hidden w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                    <input type="email" id="authEmail" placeholder="Email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                    <input type="password" id="authPassword" placeholder="Password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                    <button id="authButton" type="button" onclick="app.handleAuth()" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 rounded-lg transition">Sign In</button>
+                </div>
+
+                <p id="toggleText" class="text-sm text-gray-600 text-center">
+                    Don't have an account? <button type="button" onclick="app.toggleAuthMode()" class="text-purple-600 hover:text-purple-700 font-bold">Sign Up</button>
+                </p>
+            </div>
+        </section>
+
+        <!-- Main App -->
+        <section id="main" class="hidden min-h-screen">
+            <!-- Navigation -->
+            <nav class="bg-white shadow-md sticky top-0 z-50">
+                <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+                    <h2 class="text-2xl font-bold text-purple-600"><i class="fas fa-book mr-2"></i>Landry/Regan Cookbook</h2>
+                    <div class="flex gap-4 items-center">
+                        <span class="text-gray-700 hidden sm:inline" id="userDisplay">User</span>
+                        <button onclick="app.logout()" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition">
+                            <i class="fas fa-sign-out-alt mr-2"></i> Logout
+                        </button>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Categories Section -->
+            <div class="max-w-7xl mx-auto px-4 py-8">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-2xl font-bold text-gray-800">Categories</h3>
+                    <button onclick="app.toggleForm('addCategory')" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg transition">
+                        <i class="fas fa-plus mr-2"></i> New Category
+                    </button>
+                </div>
+
+                <!-- Add Category Form -->
+                <div id="addCategoryForm" class="hidden bg-white rounded-lg shadow-md p-6 mb-6">
+                    <h4 class="text-lg font-bold mb-4">Create New Category</h4>
+                    <div class="flex gap-2">
+                        <input type="text" id="categoryInput" placeholder="Category name (e.g., Sides, Desserts)" class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                        <button onclick="app.addCategory()" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg transition">Add</button>
+                        <button onclick="app.toggleForm('addCategory')" class="bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded-lg transition">Cancel</button>
+                    </div>
+                </div>
+
+                <!-- Categories Grid -->
+                <div id="categoriesGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 mb-8">
+                    <!-- Dynamically populated -->
+                </div>
+            </div>
+
+            <!-- Recipes Section -->
+            <div class="max-w-7xl mx-auto px-4 py-8">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-2xl font-bold text-gray-800">Recipes</h3>
+                    <button onclick="app.toggleForm('addRecipe')" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition">
+                        <i class="fas fa-plus mr-2"></i> New Recipe
+                    </button>
+                </div>
+
+                <!-- Add Recipe Form -->
+                <div id="addRecipeForm" class="hidden bg-white rounded-lg shadow-md p-6 mb-6">
+                    <h4 class="text-lg font-bold mb-4">Add New Recipe</h4>
+                    <div class="space-y-4">
+                        <input type="text" id="recipeName" placeholder="Recipe Name *" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        
+                        <select id="recipeCategory" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option value="">Select Category *</option>
+                        </select>
+                        
+                        <input type="text" id="recipeOrigin" placeholder="Who makes this (optional)" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        
+                        <input type="text" id="recipeTime" placeholder="Time (e.g., ~30 minutes)" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        
+                        <input type="url" id="recipeLink" placeholder="Recipe Link (optional)" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+                        <div>
+                            <label class="block font-bold text-gray-800 mb-2">Ingredients:</label>
+                            <div id="ingredientsContainer" class="space-y-2 mb-2">
+                                <input type="text" class="ingredient-input w-full px-4 py-2 border border-gray-300 rounded-lg" placeholder="Ingredient">
+                            </div>
+                            <button type="button" onclick="app.addIngredientInput()" class="text-blue-500 hover:text-blue-700 font-semibold">+ Add Ingredient</button>
+                        </div>
+
+                        <div>
+                            <label class="block font-bold text-gray-800 mb-2">Instructions:</label>
+                            <div id="instructionsContainer" class="space-y-2 mb-2">
+                                <textarea class="instruction-input w-full px-4 py-2 border border-gray-300 rounded-lg" placeholder="Step 1" rows="2"></textarea>
+                            </div>
+                            <button type="button" onclick="app.addInstructionInput()" class="text-blue-500 hover:text-blue-700 font-semibold">+ Add Step</button>
+                        </div>
+
+                        <div class="flex gap-2 pt-4">
+                            <button onclick="app.saveRecipe()" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded-lg transition">Save Recipe</button>
+                            <button onclick="app.toggleForm('addRecipe')" class="flex-1 bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 rounded-lg transition">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recipes Grid -->
+                <div id="recipesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Dynamically populated -->
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="app.js"></script>
+</body>
+</html>
