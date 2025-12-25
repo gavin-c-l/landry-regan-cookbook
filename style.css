@@ -1,5 +1,5 @@
 .hero-bg {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background-image: url("resources/bgimage.jpg");
 }
 .recipe-card {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -22,4 +22,19 @@
 
 .collapse.show {
   visibility: visible !important;
+}
+
+.title-text {
+    color: rgb(72,0,0);
+    text-shadow:
+        -1px -1px 0 rgb(255, 255, 255),
+         1px -1px 0 white, 
+        -1px  1px 0 white,
+         1px  1px 0 white;
+}
+.title-div {
+    padding:30px;
+    background-color: rgba(57, 57, 57, 0.8);
+    border-radius:25px;
+    
 }
