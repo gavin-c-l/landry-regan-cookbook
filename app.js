@@ -21,6 +21,7 @@ const app = {
     user: null,
     categories: [],
     recipes: [],
+    curCategory:"all",
 
     init() {
         // Check if user is logged in
@@ -47,7 +48,7 @@ const app = {
         
         if (view === 'main') {
             this.loadCategories();
-            this.loadRecipes();
+            this.loadRecipes(this.curCategory);
         }
     },
 
@@ -131,7 +132,7 @@ const app = {
         }
 
         grid.innerHTML = this.categories.map(cat => `
-            <div class="bg-white rounded-lg shadow-md p-4 flex flex-col items-center justify-center cursor-pointer hover:shadow-lg transition group">
+            <div class="bg-white rounded-lg shadow-md p-4 flex flex-col items-center justify-center cursor-pointer hover:shadow-lg transition group" onclick="app.handleCatClick('${cat.name}')">
                 <i class="fas fa-shopping-basket text-purple-500 text-3xl mb-2 group-hover:scale-110 transition"></i>
                 <h4 class="font-bold text-gray-800 text-center text-sm">${cat.name}</h4>
                 ${cat.createdBy === this.user.id ? `
@@ -162,18 +163,21 @@ const app = {
     },
 
     // Recipes
-    loadRecipes() {
+    loadRecipes(category) {
         const recipesRef = ref(db, 'recipes');
         onValue(recipesRef, (snapshot) => {
             this.recipes = [];
             if (snapshot.exists()) {
                 snapshot.forEach((childSnapshot) => {
-                    this.recipes.push({
-                        id: childSnapshot.key,
-                        ...childSnapshot.val()
-                    });
+                    if(category === 'all' || childSnapshot.val().category === category) {
+                        this.recipes.push({
+                            id: childSnapshot.key,
+                            ...childSnapshot.val()
+                        });
+                    }                    
                 });
             }
+            this.recipes.reverse();
             this.renderRecipes();
         });
     },
@@ -352,6 +356,14 @@ const app = {
         } catch (error) {
             alert(`Error logging out: ${error.message}`);
         }
+    },
+    handleCatClick(cat) {
+        if(this.curCategory === "all" || this.curCategory != cat) {
+            this.curCategory = cat;
+        } else {
+            this.curCategory = "all"
+        }
+        this.loadRecipes(this.curCategory);
     }
 };
 
