@@ -25,17 +25,16 @@
         <section id="auth" class="hidden min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center p-4">
             <div class="bg-white rounded-lg shadow-xl p-8 w-full max-w-md">
                 <h2 id="authTitle" class="text-3xl font-bold text-gray-800 mb-2">Sign In</h2>
-                <p id="authSubtitle" class="text-gray-600 mb-6">Access the family recipes</p>
+                <p id="authSubtitle" class="text-gray-600 mb-6">Access the secrets</p>
                 
                 <div id="authForm" class="space-y-4 mb-6">
-                    <input type="text" id="authName" placeholder="Name" class="hidden w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
                     <input type="email" id="authEmail" placeholder="Email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
                     <input type="password" id="authPassword" placeholder="Password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
                     <button id="authButton" type="button" onclick="app.handleAuth()" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 rounded-lg transition">Sign In</button>
                 </div>
 
                 <p id="toggleText" class="text-sm text-gray-600 text-center">
-                    Don't have an account? <button type="button" onclick="app.toggleAuthMode()" class="text-purple-600 hover:text-purple-700 font-bold">Sign Up</button>
+                    Don't have an account? <span class="text-purple-600 font-bold">Contact Gavin</span>
                 </p>
             </div>
         </section>

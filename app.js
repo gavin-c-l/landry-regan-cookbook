@@ -21,7 +21,6 @@ const app = {
     user: null,
     categories: [],
     recipes: [],
-    authMode: 'login', // 'login' or 'signup'
 
     init() {
         // Check if user is logged in
@@ -52,68 +51,20 @@ const app = {
         }
     },
 
-    toggleAuthMode() {
-        this.authMode = this.authMode === 'login' ? 'signup' : 'login';
-        this.updateAuthUI();
-    },
-
-    updateAuthUI() {
-        const authForm = document.getElementById('authForm');
-        const authTitle = document.getElementById('authTitle');
-        const authSubtitle = document.getElementById('authSubtitle');
-        const authButton = document.getElementById('authButton');
-        const toggleText = document.getElementById('toggleText');
-        const nameInput = document.getElementById('authName');
-
-        if (this.authMode === 'signup') {
-            authTitle.textContent = 'Create Account';
-            authSubtitle.textContent = 'Join the family cookbook';
-            nameInput.classList.remove('hidden');
-            authButton.textContent = 'Sign Up';
-            toggleText.innerHTML = 'Already have an account? <button type="button" onclick="app.toggleAuthMode()" class="text-purple-600 hover:text-purple-700 font-bold">Login</button>';
-        } else {
-            authTitle.textContent = 'Sign In';
-            authSubtitle.textContent = 'Access your family recipes';
-            nameInput.classList.add('hidden');
-            authButton.textContent = 'Sign In';
-            toggleText.innerHTML = 'Don\'t have an account? <button type="button" onclick="app.toggleAuthMode()" class="text-purple-600 hover:text-purple-700 font-bold">Sign Up</button>';
-        }
-    },
-
     async handleAuth() {
         const email = document.getElementById('authEmail').value.trim();
         const password = document.getElementById('authPassword').value;
-        const name = document.getElementById('authName').value.trim();
 
         if (!email || !password) {
             alert('Please fill in all fields');
             return;
         }
 
-        if (this.authMode === 'signup' && !name) {
-            alert('Please enter your name');
-            return;
-        }
-
         try {
             let userCredential;
-            if (this.authMode === 'signup') {
-                userCredential = await createUserWithEmailAndPassword(auth, email, password);
-                // Create user profile in database
-                await set(ref(db, `users/${userCredential.user.uid}`), {
-                    name: name,
-                    email: email,
-                    createdAt: new Date().toISOString()
-                });
-                alert('Account created successfully!');
-            } else {
-                userCredential = await signInWithEmailAndPassword(auth, email, password);
-            }
-
-            // Clear form
+            userCredential = await signInWithEmailAndPassword(auth, email, password);
             document.getElementById('authEmail').value = '';
             document.getElementById('authPassword').value = '';
-            document.getElementById('authName').value = '';
         } catch (error) {
             alert(`Error: ${error.message}`);
         }
@@ -408,7 +359,6 @@ const app = {
 window.app=app;
 document.addEventListener('DOMContentLoaded', () => {
     app.init();
-    app.updateAuthUI();
 });
 
 
