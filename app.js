@@ -361,7 +361,7 @@ const app = {
         if(this.curCategory === "all" || this.curCategory != cat) {
             this.curCategory = cat;
         } else {
-            this.curCategory = "all"
+            this.curCategory = "all";
         }
         this.loadRecipes(this.curCategory);
     }
